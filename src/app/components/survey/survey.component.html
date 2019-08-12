@@ -1,0 +1,7 @@
+<div class="surveys-block">
+	<div *ngFor="let survey of surveys" class="survey-card">
+		<input type="checkbox" name="survey-{{survey.id}}" [(ngModel)]="survey.isDone" (change)=update(survey)>
+		<h1>{{ survey?.title }}</h1>
+		<p>{{ survey?.description }}</p>
+	</div>
+</div>
