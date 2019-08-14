@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { of, Observable } from 'rxjs';
 import { ISurvey } from '@interfaces/.';
 
 @Injectable({
@@ -37,18 +36,18 @@ export class SurveyService {
 		}
 	}
 
-	get(): Observable<ISurvey[]> {
-		return of(this.surveys);
+	get(): ISurvey[] {
+		return this.surveys;
 	}
 
-	update(updateSurvey: ISurvey): Observable<ISurvey[]> {
+	update(updateSurvey: ISurvey): ISurvey[] {
 		this.surveys.forEach(survey => {
 			if (survey.id === updateSurvey.id) {
 				survey = updateSurvey;
 			}
 		});
 		localStorage.setItem('surveys', JSON.stringify(this.surveys));
-		return of(this.surveys);
+		return this.surveys;
 	}
 
 }

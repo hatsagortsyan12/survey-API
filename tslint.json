@@ -83,13 +83,13 @@
       true,
       "single"
     ],
-    "radix": true,
+    "radix": false,
     "semicolon": [
       true,
       "always"
     ],
     "triple-equals": [
-      true,
+      false,
       "allow-null-check"
     ],
     "typedef-whitespace": [

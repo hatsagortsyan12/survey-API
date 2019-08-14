@@ -30,6 +30,9 @@
 			],
 			"@constants/*": [
         "app/constants/*"
+			],
+			"@providers/*": [
+        "app/providers/*"
       ]
 		}
   }

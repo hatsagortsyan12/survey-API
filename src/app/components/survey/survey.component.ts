@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ISurvey } from '@interfaces/.';
-import { SurveyService } from '@services/.';
+import { DataService } from '@services/.';
 
 @Component({
 	selector: 'app-survey',
@@ -12,15 +12,15 @@ export class SurveyComponent implements OnInit {
 
 	surveys: ISurvey[];
 
-	constructor(private surveyService: SurveyService) {
-		surveyService.get()
+	constructor(private request: DataService) {
+		request.get()
 			.subscribe(res => {
 				this.surveys = res;
 			});
 	}
 
 	update(survey: ISurvey): void {
-		this.surveyService.update(survey)
+		this.request.update(survey)
 			.subscribe(res => {
 				this.surveys = res;
 			});
