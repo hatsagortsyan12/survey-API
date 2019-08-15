@@ -9,12 +9,17 @@ import { ISurvey } from '@interfaces/.';
 @Injectable()
 export class SurveyProvider implements HttpInterceptor {
 
-	constructor(private surveys: SurveyService) { }
+	constructor(private surveyService: SurveyService) { }
 
 	intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		const { url, method, headers, body } = request;
 
-		// wrap in delayed observable to simulate server api call
+		const that = this;
+
+		if (!isLoggedIn()) {
+			return unauthorized();
+		}
+
 		return of(null)
 			.pipe(mergeMap(handleRoute))
 			.pipe(materialize())
@@ -23,7 +28,7 @@ export class SurveyProvider implements HttpInterceptor {
 
 		function handleRoute() {
 			switch (true) {
-				case url.endsWith('/surveys') && method === 'POST':
+				case url.endsWith('/surveys') && method === 'PUT':
 					return update();
 				case url.endsWith('/surveys') && method === 'GET':
 					return get();
@@ -34,35 +39,12 @@ export class SurveyProvider implements HttpInterceptor {
 
 
 		function update() {
-			if (!isLoggedIn()) {
-				return unauthorized();
-			}
 			const survey: ISurvey = body;
-			this.surveys.update(survey);
-			return ok();
+			return ok(that.surveyService.update(survey));
 		}
 
-		// function authenticate() {
-		// 	const { username, password } = body;
-		// 	const user = users.find(x => x.username === username && x.password === password);
-		// 	if (!user) {
-		// 		return error('Username or password is incorrect');
-		// 	} else {
-		// 		return ok({
-		// 			id: user.id,
-		// 			username: user.username,
-		// 			firstName: user.firstName,
-		// 			lastName: user.lastName,
-		// 			token: 'fake-jwt-token'
-		// 		});
-		// 	}
-		// }
-
 		function get() {
-			if (!isLoggedIn()) {
-				return unauthorized();
-			}
-			return ok(this.survey.get());
+			return ok(that.surveyService.get());
 		}
 
 		function ok(body?) {

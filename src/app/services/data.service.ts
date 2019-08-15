@@ -12,6 +12,6 @@ export class DataService {
 	}
 
 	update(survey: ISurvey) {
-		return this.http.post<ISurvey[]>(`http://localhost:4200/users/register`, survey);
+		return this.http.put<ISurvey[]>(`http://localhost:4200/surveys`, survey);
 	}
 }

@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { SurveyComponent } from '@components/.';
 import { SurveyService } from '@services/.';
 import { SurveyProvider } from '@providers/.';
+import { SurveyInterceptor } from '@interceptors/.';
 
 @NgModule({
 	declarations: [
@@ -20,7 +21,8 @@ import { SurveyProvider } from '@providers/.';
 	],
 	providers: [
 		SurveyService,
-		SurveyProvider
+		{ provide: HTTP_INTERCEPTORS, useClass: SurveyInterceptor, multi: true },
+		{ provide: HTTP_INTERCEPTORS, useClass: SurveyProvider, multi: true }
 	],
 	bootstrap: [AppComponent]
 })

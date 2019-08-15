@@ -33,6 +33,9 @@
 			],
 			"@providers/*": [
         "app/providers/*"
+      ],
+			"@interceptors/*": [
+        "app/interceptors/*"
       ]
 		}
   }
